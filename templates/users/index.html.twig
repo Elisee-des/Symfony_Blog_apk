@@ -17,6 +17,15 @@
 				</div>
 			</div>
 		{% endfor %}
+        		{% for message in app.flashes("message") %}
+			<div class="col-xs4">
+
+				<div class="p-3 my-2 rounded-1 green light-4 text-green text-dark-4 bd-solid bd-green bd-dark-1 bd-1">
+					<span class="iconify-inline" data-icon="mdi:check-bold"></span>
+					{{message}}
+				</div>
+			</div>
+		{% endfor %}
 		<div class="col-xs4">
 			<h1>Profil de
 				{{ app.user.name }}
@@ -30,7 +39,7 @@
 		<div class="col-xs3">{{ app.user.email }}</div>
 		<div class="col-xs4">
 			<a href="{{ path("users_profil_modifier") }}" class="btn shadow-1 rounded-1 blue">Modifier le profil</a>
-			<a href="#" class="btn shadow-1 rounded-1 blue">Modifier le Mot de passe</a>
+			<a href="{{ path("users_pass_modifier") }}" class="btn shadow-1 rounded-1 blue">Modifier le Mot de passe</a>
 		</div>
 
 		<div class="col-xs4">
