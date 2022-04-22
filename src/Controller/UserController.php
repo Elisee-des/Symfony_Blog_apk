@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Annonces;
 use App\Form\AnnoncesType;
+use App\Form\EditProfilType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class UserController extends AbstractController
         $form = $this->createForm(AnnoncesType::class, $annonce);
 
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $annonce->setUsers($this->getUser());
             $annonce->setActive(false);
@@ -42,8 +43,36 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('users');
         }
-        
+
         return $this->render('users/annonce/ajout.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/users/profil/modifier", name="users_profil_modifier")
+     */
+    public function editProfil(Request $request, ManagerRegistry $managerRegistry): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditProfilType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $managerRegistry->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash(
+               'success',
+               'Profil mise a jour avec success'
+            );
+            return $this->redirectToRoute('users');
+        }
+
+        return $this->render('users/editprofile.html.twig', [
             'form' => $form->createView(),
         ]);
     }

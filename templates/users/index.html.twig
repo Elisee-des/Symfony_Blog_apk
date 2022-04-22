@@ -1,30 +1,48 @@
 {% extends 'users.html.twig' %}
 
-{% block title %}Hello UserController!
+{% block title %}Profil de
+	{{ app.user.name }}
+	{{ app.user.firstname }}
 {% endblock %}
 
 {% block body %}
 
 	<div class="grix xs4 container">
-        <div class="col-xs4"><h1>Profil de {{ app.user.name }} {{ app.user.firstname }}</h1></div>
+		{% for message in app.flashes("success") %}
+			<div class="col-xs4">
+
+				<div class="p-3 my-2 rounded-1 green light-4 text-green text-dark-4 bd-solid bd-green bd-dark-1 bd-1">
+					<span class="iconify-inline" data-icon="mdi:check-bold"></span>
+					{{message}}
+				</div>
+			</div>
+		{% endfor %}
+		<div class="col-xs4">
+			<h1>Profil de
+				{{ app.user.name }}
+				{{ app.user.firstname }}</h1>
+		</div>
 		<div class="col-xs1">Nom</div>
 		<div class="col-xs3">{{ app.user.name }}</div>
 		<div class="col-xs1">Prenom</div>
 		<div class="col-xs3">{{ app.user.firstname }}</div>
 		<div class="col-xs1">Email</div>
 		<div class="col-xs3">{{ app.user.email }}</div>
-        <div class="col-xs4">
-            <a href="#" class="btn shadow-1 rounded-1 blue">Modifier le profil</a>
-            <a href="#" class="btn shadow-1 rounded-1 blue">Modifier le Mot de passe</a>
-        </div>
+		<div class="col-xs4">
+			<a href="{{ path("users_profil_modifier") }}" class="btn shadow-1 rounded-1 blue">Modifier le profil</a>
+			<a href="#" class="btn shadow-1 rounded-1 blue">Modifier le Mot de passe</a>
+		</div>
 
-         <div class="col-xs4">
-            <h1>Annonces de {{ app.user.name }} {{ app.user.firstname }} ({{ app.user.annonces|length }})</h1>
-        </div>
-        	{% for annonce in app.user.annonces %}
-                <div class="col-xs1">Titre :</div>
-                <div class="col-xs3">{{ annonce.title }}</div>
-            {% endfor %}
+		<div class="col-xs4">
+			<h1>Annonces de
+				{{ app.user.name }}
+				{{ app.user.firstname }}
+				({{ app.user.annonces|length }})</h1>
+		</div>
+		{% for annonce in app.user.annonces %}
+			<div class="col-xs1">Titre :</div>
+			<div class="col-xs3">{{ annonce.title }}</div>
+		{% endfor %}
 	</div>
 
 {% endblock %}
