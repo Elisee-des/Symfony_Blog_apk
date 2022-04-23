@@ -87,7 +87,7 @@ class UserController extends AbstractController
     {
         if ($request->isMethod("POST")) {
 
-            $user = $usersRepo->findBy(["name"=>"Keyboard"]);
+            $user = $usersRepo->findOneBy(["name"=>'name']);
             $passwordhasher = $userPasswordHasher->hashPassword($user, $request->request->get("oldpass"));
 
             if ($passwordhasher  ==  $user->getPassword()) {

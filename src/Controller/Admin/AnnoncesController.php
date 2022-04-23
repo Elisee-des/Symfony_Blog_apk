@@ -6,6 +6,7 @@ use App\Entity\Annonces;
 use App\Repository\AnnoncesRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -42,7 +43,7 @@ class AnnoncesController extends AbstractController
     /**
      * @Route("/supprimer/{id}", name="supprimer")
      */
-    public function supprimer(Annonces $annonces, ManagerRegistry $managerRegi): Response
+    public function supprimer(Annonces $annonces, ManagerRegistry $managerRegi): RedirectResponse
     {
         $em = $managerRegi->getManager();
         $em->remove($annonces);
