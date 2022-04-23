@@ -1,0 +1,36 @@
+{% extends 'users.html.twig' %}
+
+{% block title %}Verification du mot de passe de
+	{{ app.user.name }}
+	{{ app.user.firstname }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="grix xs4 container">
+		{% for message in app.flashes("success") %}
+			<div class="col-xs4">
+				<div class="p-3 my-2 rounded-1 red light-4 text-green text-dark-4">{{ message }}</div>
+			</div>
+		{% endfor %}
+        {% for message in app.flashes("error") %}
+			<div class="col-xs4">
+				<div class="p-3 my-2 rounded-1 red light-4 text-red text-dark-4">{{ message }}</div>
+			</div>
+		{% endfor %}
+		<div class="col-xs4">
+			<h1>Verification du mot de passe de
+				{{ app.user.name }}
+				{{ app.user.firstname }}</h1>
+			<form method="post">
+				<div class="form-field">
+					<label for="oldpass">Saisiez Votre ancien Mot de passe</label>
+					<input type="password" id="oldpass" name="oldpass" class="form-control rounded-1"/>
+				</div>
+				<button class="btn shadow-1 rounded-1 blue">Valider</button>
+			</form>
+		</div>
+
+	</div>
+
+{% endblock %}
