@@ -80,33 +80,33 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/users/verifpass/", name="users_verif_pass")
-     */
-    public function verifPass(Request $request, UserPasswordHasherInterface $userPasswordHasher, UsersRepository $usersRepo): Response
-    {
-        if ($request->isMethod("POST")) {
+    // /**
+    //  * @Route("/users/verifpass/", name="users_verif_pass")
+    //  */
+    // public function verifPass(Users $users, Request $request, UserPasswordHasherInterface $userPasswordHasher, UsersRepository $usersRepo): Response
+    // {
+    //     if ($request->isMethod("POST")) {
 
-            $user = $usersRepo->findOneBy(["name"=>'name']);
-            $passwordhasher = $userPasswordHasher->hashPassword($user, $request->request->get("oldpass"));
+    //         $user = $usersRepo->findOneByName(['Sabidani']);
+    //         $passwordhasher = $userPasswordHasher->hashPassword($user, $request->request->get("oldpass"));
 
-            if ($passwordhasher  ==  $user->getPassword()) {
+    //         if ($passwordhasher  ==  $user->getPassword()) {
 
-                $this->addFlash(
-                    'success',
-                    'Mot de passe verifier avec success'
-                );
-                return $this->redirectToRoute('users_pass_modifier');
-            } else {
-                $this->addFlash(
-                    'error',
-                    'Votre ancien mot de pass est erroné'
-                );
-            }
-        }
+    //             $this->addFlash(
+    //                 'success',
+    //                 'Mot de passe verifier avec success'
+    //             );
+    //             return $this->redirectToRoute('users_pass_modifier');
+    //         } else {
+    //             $this->addFlash(
+    //                 'error',
+    //                 'Votre ancien mot de pass est erroné'
+    //             );
+    //         }
+    //     }
 
-        return $this->render('users/verifpass.html.twig');
-    }
+    //     return $this->render('users/verifpass.html.twig');
+    // }
 
     /**
      * @Route("/users/pass/modifier", name="users_pass_modifier")
