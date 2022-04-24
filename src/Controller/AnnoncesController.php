@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\AnnoncesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -13,13 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnnoncesController extends AbstractController
 {
     /**
-     * @Route("/details/{slug}", name="detail")
+     * @Route("/details/{slug}", name="details")
      */
-    public function index($slug, AnnoncesRepository $annoncesRepo): Response
+    public function details($slug, AnnoncesRepository $annoncesRepo): Response
     {
-        $annonce = $annoncesRepo->findBy(["slug" => $slug]);
-        return $this->render('annonces/index.html.twig', [
-            'controller_name' => 'AnnoncesController',
-        ]);
+        $annonce = $annoncesRepo->findOneBy(["slug" => $slug]);
+
+        if (!$annonce) {
+            throw new NotFoundHttpException('Pas d\'annonce trouver');
+            
+        }
+        
+        return $this->render('annonces/details.html.twig', compact('annonce'));
     }
 }
