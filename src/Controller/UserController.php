@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Annonces;
-use App\Entity\Users;
+use App\Entity\Images;
 use App\Form\AnnoncesType;
 use App\Form\EditProfilType;
-use App\Repository\UsersRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +36,20 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //on recuper les images transmises
+            $images = $form->get('Images')->getData();
+            //on boucle sur les images
+            foreach ($images as $image) {
+                //on gener un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->getExtension();
+                //on le copie dans le dossiers uploads
+                $image->move($this->getParameter('images_directory'),$fichier);
+                //on stock l'image dans la base de donneé
+                $img = new Images();
+                $img->setName($fichier);
+                $annonce->addImage($img);
+            }
+
             $annonce->setUsers($this->getUser());
             $annonce->setActive(false);
 
