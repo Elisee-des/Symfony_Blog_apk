@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+
+	<h1>Gestion des utilisateurs</h1>
+
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nom</th>
+					<th>Email</th>
+					<th>Role</th>
+					<th>Annonces</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in users %}
+					<tr>
+						<td>{{user.id}}</td>
+						<td>{{user.name}}</td>
+						<td>{{user.email}}</td>
+						<td>
+                            {% for role in user.roles %}
+                                {% if role == "ROLE_USER"%}
+                                    Utilisateur
+                                 {% elseif role == "ROLE_EDITOR"%}
+                                    Editeur
+                                 {% elseif role == "ROLE_ADMIN"%}
+                                    Admin
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+						<td>{{user.annonces|length}}</td>
+						<td colspan=5>
+							<a href="" class="btn shadow-1 rounded-1 green" >Modifier</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

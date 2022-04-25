@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Categories;
 use App\Form\CategoriesType;
 use App\Form\CategoriesTypesType;
+use App\Repository\UsersRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,8 +38,8 @@ class AdminController extends AbstractController
         $form = $this->createForm(CategoriesType::class, $categories);
 
         $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) { 
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $managerRegistry->getManager();
             $em->persist($categories);
             $em->flush();
@@ -51,4 +52,15 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/users", name="users")
+     */
+    public function userslist(UsersRepository $users): Response
+    {
+        return $this->render('admin/users.html.twig', [
+            'users' => $users->findAll(),
+        ]);
+    }
 }
+
