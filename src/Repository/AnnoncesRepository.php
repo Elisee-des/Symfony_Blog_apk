@@ -19,6 +19,17 @@ class AnnoncesRepository extends ServiceEntityRepository
         parent::__construct($registry, Annonces::class);
     }
 
+    public function search($mots){
+
+        $query = $this->createQueryBuilder("a");
+        $query->where("a");
+        if ($mots != null) {
+           $query->Where("MATCH_AGAINST(a.title, a.content) AGAINST(:mots boolean)>0")->setParameter('mots', $mots);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Annonces[] Returns an array of Annonces objects
     //  */
