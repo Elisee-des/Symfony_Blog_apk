@@ -3,8 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Categories;
+use App\Entity\Users;
 use App\Form\CategoriesType;
-use App\Form\CategoriesTypesType;
+use App\Form\EditUsersType;
 use App\Repository\UsersRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,5 +63,31 @@ class AdminController extends AbstractController
             'users' => $users->findAll(),
         ]);
     }
+
+        /**
+     * @Route("/users/modifier/{id}", name="users_modifier")
+     */
+    public function editUser(Users $user, Request $request, ManagerRegistry $managerRegistry): Response
+    {
+        $form = $this->createForm(EditUsersType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $managerRegistry->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash(
+               'message',
+               'Utilisateur modifier avec success'
+            );
+
+            return $this->redirectToRoute('admin_users');
+        }
+        return $this->render('admin/editusers.html.twig', [
+            "userForm" => $form->createView()
+        ]);
+    }
+    
 }
 

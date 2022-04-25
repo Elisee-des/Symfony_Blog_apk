@@ -30,6 +30,8 @@
                                     Utilisateur
                                  {% elseif role == "ROLE_EDITOR"%}
                                     Editeur
+								{% elseif role == "ROLE_MODERATEUR"%}
+                                    moderateur
                                  {% elseif role == "ROLE_ADMIN"%}
                                     Admin
                                 {% endif %}
@@ -37,7 +39,7 @@
                         </td>
 						<td>{{user.annonces|length}}</td>
 						<td colspan=5>
-							<a href="" class="btn shadow-1 rounded-1 green" >Modifier</a>
+							<a href="{{ path("admin_users_modifier", {"id": user.id}) }}" class="btn shadow-1 rounded-1 green" >Modifier</a>
 						</td>
 					</tr>
 				{% endfor %}

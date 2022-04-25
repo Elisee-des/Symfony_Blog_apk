@@ -17,8 +17,8 @@ class EditUsersType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                "contraints" => [
-                    new NotBlank(["Mreci de saisir l'email"])
+                "constraints" => [
+                    new NotBlank(["message" => "Mreci de saisir l'email"])
                 ],
                 'required' => true,
                 'attr' => [

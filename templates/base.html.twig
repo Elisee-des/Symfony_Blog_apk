@@ -31,13 +31,18 @@
 					<a class="navbar-link" href="#">Link 2</a>
 					<a class="navbar-link" href="#">Link 3</a>
 					<a class="navbar-link" href="#">Link 4</a>
+					{% if is_granted("ROLE_ADMIN") %}
+					<a class="navbar-link" href="#">Admin</a>										
+					{% endif %}
+
+
 				</div>
 			</nav>
 		</header>
 
 		<main>
 			<!-- Code here the main content -->
-            {% block body %}{% endblock %}
+			{% block body %}{% endblock %}
 		</main>
 
 		<footer class="footer primary">
