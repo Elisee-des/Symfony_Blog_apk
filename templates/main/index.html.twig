@@ -2,25 +2,35 @@
 
 {% block title %}Hello MainController!
 {% endblock %}
+{% block stylesheet %}
+<!-- Head of your page -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
 
+{% endblock %}
 {% block body %}
 
 	<div class="container">
 		{% for annonce in annonces %}
 			<div class="card shadow-1 fx-row white">
 				<div class="primary d-flex vcenter fx-center p-4">
-					<img src="{{ asset('uploads/annonces/' ~ annonce.images[0].name) }}"
-					 height="300px" width="300px" alt="{{ annonce.title}}">
+					<img src="{{ asset('uploads/annonces/' ~ annonce.images[0].name) }}" height="300px" width="300px" alt="{{ annonce.title}}">
 				</div>
 				<div class="d-flex fx-col fx-grow">
-					<div class="card-header">{{ annonce.title }}</div>
+					<div class="card-header">
+						<a href="{{ path("annonces_details", {"slug": annonce.slug}) }}">{{ annonce.title }}</a>
+					</div>
 					<div class="card-content">
 						<p>
-							Categories: {{annonce.categories.name}}
+							Categories:
+							{{annonce.categories.name}}
 						</p>
 						<p>
 							{{ annonce.content|striptags|slice(0, 200) }}...
 						</p>
+						<div>
+							<i class="fas fa-heart"></i>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -18,7 +18,7 @@
 							Categories: {{annonce.categories.name}}
 						</p>
 						<p>
-							{{ annonce.content|striptags|slice(0, 200) }}...
+							{{ annonce.content|raw }}
 						</p>
 					</div>
 				</div>
