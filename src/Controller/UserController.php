@@ -96,14 +96,14 @@ class UserController extends AbstractController
     // /**
     //  * @Route("/users/verifpass/", name="users_verif_pass")
     //  */
-    // public function verifPass(Users $users, Request $request, UserPasswordHasherInterface $userPasswordHasher, UsersRepository $usersRepo): Response
+    // public function verifPass(Request $request, UserPasswordHasherInterface $userPasswordHasher, UsersRepository $usersRepo): Response
     // {
     //     if ($request->isMethod("POST")) {
 
-    //         $user = $usersRepo->findOneByName(['Sabidani']);
-    //         $passwordhasher = $userPasswordHasher->hashPassword($user, $request->request->get("oldpass"));
+    //         $user = $this->getUser();
+    //        $userPasswordHasher->verify($user, $request->request->get("oldpass"));
 
-    //         if ($passwordhasher  ==  $user->getPassword()) {
+    //         if ($userPasswordHasher) {
 
     //             $this->addFlash(
     //                 'success',
