@@ -24,7 +24,9 @@ class AnnoncesRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder("a");
         $query->where("a");
         if ($mots != null) {
-           $query->Where("MATCH_AGAINST(a.title, a.content) AGAINST(:mots boolean)>0")->setParameter('mots', $mots);
+           $query->Where("MATCH_AGAINST(a.title, a.content)
+            AGAINST(:mots boolean)>0")
+            ->setParameter('mots', $mots);
         }
 
         return $query->getQuery()->getResult();
