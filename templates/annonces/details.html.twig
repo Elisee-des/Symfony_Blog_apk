@@ -37,9 +37,14 @@
 					<div>
 						{{comment.content|raw}}
 					</div>
+					<p>
+						<a href="#ajout-commentaire" data-reply data-id="{{comment.id}}" class="btn primary press">Repondre</a>
+					</p>
+					<br>
+					<hr>
 				{% endfor %}
 			</div>
-			<div class="col xs2 col-sm3">
+			<div class="col xs2 col-sm3" id="ajout-commentaire">
 				<h2>Ajouter un commentaire</h2>
 				{{ form(commentForm) }}
 				</div>
@@ -47,3 +52,15 @@
 		</div>
 
 	{% endblock %}
+
+{% block javascript %}
+	<script>
+    window.onload = () => {
+        document.querySelectorAll("[data-reply]").forEach(element => {
+            element.addEventListener("click", function() {
+                console.log(this)
+            });
+        })
+    }
+	</script>
+{% endblock %}

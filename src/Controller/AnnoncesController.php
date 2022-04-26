@@ -6,6 +6,7 @@ use App\Entity\Annonces;
 use App\Entity\Comments;
 use App\Form\CommentsType;
 use App\Repository\AnnoncesRepository;
+use App\Repository\CommentsRepository;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +23,7 @@ class AnnoncesController extends AbstractController
     /**
      * @Route("/details/{slug}", name="details")
      */
-    public function details(Annonces $annonce, $slug, AnnoncesRepository $annoncesRepo, Request $request, ManagerRegistry $managerRegi): Response
+    public function details(Annonces $annonce, $slug, AnnoncesRepository $annoncesRepo, Request $request, ManagerRegistry $managerRegi, CommentsRepository $commentsRepo): Response
     {
         $annonce = $annoncesRepo->findOneBy(["slug" => $slug]);
         // if (!$annonce) {
@@ -40,6 +41,16 @@ class AnnoncesController extends AbstractController
 
             $comment->setCreatedAt(new DateTime());
             $comment->setAnnonces($annonce);
+
+            //on recupere le contenu du champs parentid
+            // $parentid = $commentForm->get("parentid")->getData();
+
+            // //on va chercher les commentaires correspondants
+            // $em = $managerRegi->getManager();
+
+            // $parent = $commentsRepo->find($parentid);
+
+            // $comment->setParent($parent);
 
             $em = $managerRegi->getManager();
             $em->persist($comment);
