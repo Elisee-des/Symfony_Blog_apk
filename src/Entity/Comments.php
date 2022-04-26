@@ -27,7 +27,7 @@ class Comments
     /**
      * @ORM\Column(type="boolean")
      */
-    private $active;
+    private $active = false;
 
     /**
      * @ORM\Column(type="string", length=255)
