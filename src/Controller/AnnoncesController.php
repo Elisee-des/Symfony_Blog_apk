@@ -45,7 +45,7 @@ class AnnoncesController extends AbstractController
             //on recupere le contenu du champs parentid
             // $parentid = $commentForm->get("parentid")->getData();
 
-            // //on va chercher les commentaires correspondants
+            // //on va chercher les commentaires correspondants dans la base de donne
             // $em = $managerRegi->getManager();
 
             // $parent = $commentsRepo->find($parentid);
