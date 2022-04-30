@@ -7,6 +7,7 @@ use App\Entity\Images;
 use App\Form\AnnoncesType;
 use App\Form\EditProfilType;
 use Doctrine\Persistence\ManagerRegistry;
+use MangePictureService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/annonces/ajout", name="users_annonces_ajout")
      */
-    public function ajoutAnnonce(Request $request, ManagerRegistry $managerRegistry): Response
+    public function ajoutAnnonce(Request $request, ManagerRegistry $managerRegistry, MangePictureService $pictureService)
     {
         $annonce = new Annonces();
 
@@ -38,18 +39,10 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //on recuper les images transmises
             $images = $form->get('Images')->getData();
-            //on boucle sur les images
-            foreach ($images as $image) {
-                //on gener un nouveau nom de fichier
-                $fichier = md5(uniqid()) . '.' . $image->getExtension();
-                //on le copie dans le dossiers uploads
-                $image->move($this->getParameter('images_directory'),$fichier);
-                //on stock l'image dans la base de donneé
-                $img = new Images();
-                $img->setName($fichier);
-                $annonce->addImage($img);
-            }
 
+            //on ajoute les images
+            $pictureService->add($images, $annonce); //
+            
             $annonce->setUsers($this->getUser());
             $annonce->setActive(false);
 
