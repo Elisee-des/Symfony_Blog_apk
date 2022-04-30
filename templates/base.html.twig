@@ -32,10 +32,8 @@
 					<a class="navbar-link" href="#">Link 3</a>
 					<a class="navbar-link" href="#">Link 4</a>
 					{% if is_granted("ROLE_ADMIN") %}
-					<a class="navbar-link" href="#">Admin</a>										
+						<a class="navbar-link" href="#">Admin</a>
 					{% endif %}
-
-
 				</div>
 			</nav>
 		</header>
@@ -51,6 +49,10 @@
 
 		{# <link rel="stylesheet" href="{{ asset("axentix/js/axentix.js") }}">  #}
 		<!-- Axentix JS minified version -->
-		<script src="https://cdn.jsdelivr.net/npm/axentix@2.0.1/dist/axentix.min.js"></script>
+		{% block javascript %}
+			<script src="https://cdn.jsdelivr.net/npm/axentix@2.0.1/dist/axentix.min.js"></script>
+			<script src="{{ asset("/axentix/js/axentix.js") }}"></script>
+		{% endblock %}
+
 	</body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Annonces;
 use App\Entity\Categories;
+use App\Entity\Regions;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -12,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class AnnoncesType extends AbstractType
@@ -30,6 +32,18 @@ class AnnoncesType extends AbstractType
                 "mapped"=>false,
                 "required"=>true
                 ])
+            ->add('regions', EntityType::class, [
+                "mapped" => false,
+                "class" => Regions::class,
+                "choice_label" => "name",
+                "placeholder" => "Region",
+                "label" => "Region"
+
+            ])
+
+            ->add('departements', ChoiceType::class, [
+                "placeholder" => "Depatement (Choisir une region)"
+            ])
             ->add('Valider', SubmitType::class)
         ;
     }

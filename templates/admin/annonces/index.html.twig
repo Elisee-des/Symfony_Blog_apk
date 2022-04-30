@@ -26,12 +26,12 @@
 						<td>{{annonce.createdAt|date}}</td>
 						<td>
 							<label class="form-switch mt-2">
-								<input type="checkbox" {{ (annonce.active) ? 'checked' : "" }} data-id="{{annonce.active}}">
+								<input type="checkbox" {{ (annonce.active) ? 'checked' : "" }} data-id="{{annonce.id}}">
 								<span class="form-slider"></span>
 							</label>
 						</td>
 						<td>
-							<a href="{{ path("admin_annonces_supprimer", {"id": annonce.id}) }}" class="btn shadow-1 rounded-1 blue" onclick = "return confirm('voulez vous vraiment supprimer cet article?')">Supprimer</a>
+							<a href="{{ path("admin_annonces_supprimer", {"id": annonce.id}) }}" class="btn shadow-1 rounded-1 blue" onclick="return confirm('voulez vous vraiment supprimer cet article?')">Supprimer</a>
 						</td>
 					</tr>
 				{% endfor %}
@@ -42,21 +42,18 @@
 
 {% block javascript %}
 
-	<script>
-		window.onload = () => {
-let activer = document.querySelectorAll("[type=checkbox]")
-for (let bouton of activer) {
-bouton.addEventListener("click", function () {
-let xmlhttp = new XMLHttpRequest;
+<script>
+	window.onload = () => {
+		let activer = document.querySelectorAll("[type=checkbox]")
+		for(let bouton of activer){
+			bouton.addEventListener("click", function(){
+				let xmlhttp = new XMLHttpRequest;
 
-xmlhttp.open("get", `/admin/annonces/activer/${
-this.dataset.id
-}`)
-xmlhttp.send();
-})
-}
-}
-	</script>
-
+				xmlhttp.open("get", `/admin/annonces/activer/${this.dataset.id}`)
+				xmlhttp.send();
+			})
+		}
+	}
+</script>
 
 {% endblock %}
