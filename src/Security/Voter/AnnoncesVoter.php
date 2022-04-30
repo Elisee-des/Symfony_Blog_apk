@@ -5,6 +5,7 @@ namespace App\Security\Voter;
 use App\Entity\Annonces;
 use App\Entity\Users;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -12,6 +13,13 @@ class AnnoncesVoter extends Voter
 {
     const ANNONCE_EDIT = 'annonce_edit';
     const ANNONCE_DELETE = 'annonce_delete';
+
+    private $secutity;
+
+    public function __construct(Security $security)
+    {
+        $this->secutity = $security;
+    }
 
     protected function supports(string $attribute, $annonce): bool
     {
@@ -29,6 +37,9 @@ class AnnoncesVoter extends Voter
             return false;
         }
 
+        //on verifie si l'utilisateur est admin
+        if($this->secutity->isGranted("ROLE_ADMIN")) return true;
+
         if (null === $annonce->getUsers()) return false;
 
         // ... (check conditions and return true to grant permission) ...
@@ -40,7 +51,7 @@ class AnnoncesVoter extends Voter
                 break;
             case self::ANNONCE_DELETE:
                 //on verifie si l'utilisateur peu supprimer
-                return $this->canEdit($annonce, $user);
+                return $this->canDelete();
                 break;
         }
 
@@ -52,8 +63,9 @@ class AnnoncesVoter extends Voter
         return $user === $annonce->getUsers();
     }
 
-    private function canDelete(Annonces $annonce, Users $user) {
+    private function canDelete() {
         //Le propretaire peu la supprimer
-        return $user === $annonce->getUsers();
+        if($this->secutity->isGranted("ROLE_ADMIN/ROLE_EDITOR")) return true;
+        return false;
     }
 }
