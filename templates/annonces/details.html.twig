@@ -24,6 +24,11 @@
 						{{ annonce.content|raw }}
 					</p>
 				</div>
+				{% if is_granted("annonce_edit", annonce) %}
+					<p>
+						<a href="{{ path("users_annonces_ajout", {"id": annonce.id}) }} class=" btn primary press"">Modifier</a>
+					</p>
+				{% endif %}
 			</div>
 		</div>
 		<div class="grix xs2 sm3 gutter-0 card">
@@ -37,6 +42,7 @@
 					<div>
 						{{comment.content|raw}}
 					</div>
+
 					<p>
 						<a href="#ajout-commentaire" data-reply data-id="{{comment.id}}" class="btn primary press">Repondre</a>
 					</p>
@@ -53,14 +59,14 @@
 
 	{% endblock %}
 
-{% block javascript %}
-	<script>
-    window.onload = () => {
-        document.querySelectorAll("[data-reply]").forEach(element => {
-            element.addEventListener("click", function() {
-                console.log(this)
-            });
-        })
-    }
-	</script>
-{% endblock %}
+	{% block javascript %}
+		<script>
+			window.onload = () => {
+document.querySelectorAll("[data-reply]").forEach(element => {
+element.addEventListener("click", function () {
+console.log(this)
+});
+})
+}
+		</script>
+	{% endblock %}
